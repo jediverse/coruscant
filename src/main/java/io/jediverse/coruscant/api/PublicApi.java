@@ -30,15 +30,16 @@ import io.micronaut.http.multipart.StreamingFileUpload;
 import io.reactivex.Single;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.responses.*;
+import jakarta.annotation.Nullable;
 
-import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 
 
 @Controller
-public interface PublicApi {
+public class PublicApi {
+
 
 
     @Operation(summary = "Block account with id.", operationId = "accountBlock", description = "" , tags = {"accounts"})
@@ -49,7 +50,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/accounts/{id}/block", produces = { "application/json" })
-    default Single<HttpResponse<AccountRelationship>> accountBlock(@Parameter(description = "The id of the account to block.") @PathVariable("id") String id
+    public Single<HttpResponse<AccountRelationship>> accountBlock(@Parameter(description = "The id of the account to block.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -65,7 +66,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/accounts", produces = { "application/json" })
-    default Single<HttpResponse<OauthToken>> accountCreate(@Nullable @Parameter(description = "Text that will be reviewed by moderators if registrations require manual approval.") @Valid @QueryValue(value = "reason") String reason
+    public Single<HttpResponse<OauthToken>> accountCreate(@Nullable @Parameter(description = "Text that will be reviewed by moderators if registrations require manual approval.") @Valid @QueryValue(value = "reason") String reason
 , @Nullable @Parameter(description = "The desired username for the account.") @Valid @QueryValue(value = "username") String username
 , @Nullable @Parameter(description = "The email address to be used for login.") @Valid @QueryValue(value = "email") String email
 , @Nullable @Parameter(description = "The password to be used for login. This will be hashed before storage.") @Valid @QueryValue(value = "password") String password
@@ -86,7 +87,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/accounts/delete", consumes = {"multipart/form-data"})
-    default Single<HttpResponse<Void>> accountDelete(@Parameter(description = "") @QueryValue(value = "password")  String password
+    public Single<HttpResponse<Void>> accountDelete(@Parameter(description = "") @QueryValue(value = "password")  String password
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -102,7 +103,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/accounts/{id}/follow", produces = { "application/json" }, consumes = {"application/json", "application/xml", "application/x-www-form-urlencoded"})
-    default Single<HttpResponse<AccountRelationship>> accountFollow(@Parameter(description = "ID of the account to follow.") @PathVariable("id") String id
+    public Single<HttpResponse<AccountRelationship>> accountFollow(@Parameter(description = "ID of the account to follow.") @PathVariable("id") String id
 ,@Parameter(description = "") @Valid @Body IdFollowBody body
 ) {
         return Single.fromCallable(() -> {
@@ -119,7 +120,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/accounts/{id}/follow", produces = { "application/json" }, consumes = {"application/json", "application/xml", "application/x-www-form-urlencoded"})
-    default Single<HttpResponse<AccountRelationship>> accountFollow(@Parameter(description = "ID of the account to follow.") @PathVariable("id") String id
+    public Single<HttpResponse<AccountRelationship>> accountFollow(@Parameter(description = "ID of the account to follow.") @PathVariable("id") String id
 ,@Parameter(description = "") @QueryValue(value = "reblogs")  Boolean reblogs
 ,@Parameter(description = "") @QueryValue(value = "notify")  Boolean notify
 ) {
@@ -137,7 +138,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/accounts/{id}/followers", produces = { "application/json" })
-    default Single<HttpResponse<List<Account>>> accountFollowers(@Parameter(description = "Account ID.") @PathVariable("id") String id
+    public Single<HttpResponse<List<Account>>> accountFollowers(@Parameter(description = "Account ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -153,7 +154,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/accounts/{id}/following")
-    default Single<HttpResponse<Void>> accountFollowing(@Parameter(description = "Account ID.") @PathVariable("id") String id
+    public Single<HttpResponse<Void>> accountFollowing(@Parameter(description = "Account ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -169,7 +170,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/accounts/{id}", produces = { "application/json" })
-    default Single<HttpResponse<Account>> accountGet(@Parameter(description = "The id of the requested account.") @PathVariable("id") String id
+    public Single<HttpResponse<Account>> accountGet(@Parameter(description = "The id of the requested account.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -185,7 +186,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/accounts/relationships", produces = { "application/json" })
-    default Single<HttpResponse<List<AccountRelationship>>> accountRelationships(@NotNull @Parameter(description = "Account IDs.") @Valid @QueryValue(value = "id") List<String> id
+    public Single<HttpResponse<List<AccountRelationship>>> accountRelationships(@NotNull @Parameter(description = "Account IDs.") @Valid @QueryValue(value = "id") List<String> id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -201,7 +202,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/accounts/{id}/statuses", produces = { "application/json" })
-    default Single<HttpResponse<List<io.jediverse.coruscant.model.Status>>> accountStatuses(@Parameter(description = "Account ID.") @PathVariable("id") String id
+    public Single<HttpResponse<List<io.jediverse.coruscant.model.Status>>> accountStatuses(@Parameter(description = "Account ID.") @PathVariable("id") String id
 , @Nullable @Parameter(description = "Number of statuses to return.") @Valid @QueryValue(value = "limit", defaultValue = "30") Integer limit
 , @Nullable @Parameter(description = "Exclude statuses that are a reply to another status.") @Valid @QueryValue(value = "exclude_replies", defaultValue = "false") Boolean excludeReplies
 , @Nullable @Parameter(description = "Exclude statuses that are a reblog/boost of another status.") @Valid @QueryValue(value = "exclude_reblogs", defaultValue = "false") Boolean excludeReblogs
@@ -225,7 +226,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/accounts/{id}/unblock", produces = { "application/json" })
-    default Single<HttpResponse<AccountRelationship>> accountUnblock(@Parameter(description = "The id of the account to unblock.") @PathVariable("id") String id
+    public Single<HttpResponse<AccountRelationship>> accountUnblock(@Parameter(description = "The id of the account to unblock.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -241,7 +242,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/accounts/{id}/unfollow", produces = { "application/json" })
-    default Single<HttpResponse<AccountRelationship>> accountUnfollow(@Parameter(description = "The id of the account to unfollow.") @PathVariable("id") String id
+    public Single<HttpResponse<AccountRelationship>> accountUnfollow(@Parameter(description = "The id of the account to unfollow.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -257,7 +258,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Patch(value = "/api/v1/accounts/update_credentials", produces = { "application/json" }, consumes = {"multipart/form-data"})
-    default Single<HttpResponse<Account>> accountUpdate(@Parameter(description = "") @QueryValue(value = "discoverable")  Boolean discoverable
+    public Single<HttpResponse<Account>> accountUpdate(@Parameter(description = "") @QueryValue(value = "discoverable")  Boolean discoverable
 ,@Parameter(description = "") @QueryValue(value = "bot")  Boolean bot
 ,@Parameter(description = "") @QueryValue(value = "display_name")  String displayName
 ,@Parameter(description = "") @QueryValue(value = "note")  String note
@@ -285,7 +286,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/accounts/verify_credentials", produces = { "application/json" })
-    default Single<HttpResponse<Account>> accountVerify() {
+    public Single<HttpResponse<Account>> accountVerify() {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
         });
@@ -301,7 +302,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/admin/accounts/{id}/action", consumes = {"multipart/form-data"})
-    default Single<HttpResponse<Void>> adminAccountAction(@Parameter(description = "") @QueryValue(value = "type")  String type
+    public Single<HttpResponse<Void>> adminAccountAction(@Parameter(description = "") @QueryValue(value = "type")  String type
 ,@Parameter(description = "") @QueryValue(value = "text")  String text
 ,@Parameter(description = "ID of the account.") @PathVariable("id") String id
 ) {
@@ -320,7 +321,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/apps", produces = { "application/json" }, consumes = {"application/json", "application/xml", "application/x-www-form-urlencoded"})
-    default Single<HttpResponse<Application>> appCreate(@Parameter(description = "") @Valid @Body V1AppsBody body
+    public Single<HttpResponse<Application>> appCreate(@Parameter(description = "") @Valid @Body V1AppsBody body
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -337,7 +338,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/apps", produces = { "application/json" }, consumes = {"application/json", "application/xml", "application/x-www-form-urlencoded"})
-    default Single<HttpResponse<Application>> appCreate(@Parameter(description = "") @QueryValue(value = "client_name")  String clientName
+    public Single<HttpResponse<Application>> appCreate(@Parameter(description = "") @QueryValue(value = "client_name")  String clientName
 ,@Parameter(description = "") @QueryValue(value = "redirect_uris")  String redirectUris
 ,@Parameter(description = "") @QueryValue(value = "scopes")  String scopes
 ,@Parameter(description = "") @QueryValue(value = "website")  String website
@@ -356,7 +357,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/follow_requests/{account_id}/authorize", produces = { "application/json" })
-    default Single<HttpResponse<AccountRelationship>> authorizeFollowRequest(@Parameter(description = "ID of the account requesting to follow you.") @PathVariable("account_id") String accountId
+    public Single<HttpResponse<AccountRelationship>> authorizeFollowRequest(@Parameter(description = "ID of the account requesting to follow you.") @PathVariable("account_id") String accountId
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -372,7 +373,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/blocks", produces = { "application/json" })
-    default Single<HttpResponse<List<Account>>> blocksGet(@Nullable @Parameter(description = "Number of blocks to return.") @Valid @QueryValue(value = "limit", defaultValue = "20") Integer limit
+    public Single<HttpResponse<List<Account>>> blocksGet(@Nullable @Parameter(description = "Number of blocks to return.") @Valid @QueryValue(value = "limit", defaultValue = "20") Integer limit
 ,@Nullable @Parameter(description = "Return only blocks *OLDER* than the given block ID. The block with the specified ID will not be included in the response.") @Valid @QueryValue(value = "max_id") String maxId
 ,@Nullable @Parameter(description = "Return only blocks *NEWER* than the given block ID. The block with the specified ID will not be included in the response.") @Valid @QueryValue(value = "since_id") String sinceId
 ) {
@@ -388,7 +389,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/bookmarks", produces = { "application/json" })
-    default Single<HttpResponse<List<io.jediverse.coruscant.model.Status>>> bookmarksGet() {
+    public Single<HttpResponse<List<io.jediverse.coruscant.model.Status>>> bookmarksGet() {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
         });
@@ -403,7 +404,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/notifications", produces = { "application/json" })
-    default Single<HttpResponse<Object>> clearNotifications() {
+    public Single<HttpResponse<Object>> clearNotifications() {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
         });
@@ -416,7 +417,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/custom_emojis", produces = { "application/json" })
-    default Single<HttpResponse<List<Emoji>>> customEmojisGet() {
+    public Single<HttpResponse<List<Emoji>>> customEmojisGet() {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
         });
@@ -432,7 +433,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/admin/domain_blocks", produces = { "application/json" }, consumes = {"multipart/form-data"})
-    default Single<HttpResponse<DomainBlock>> domainBlockCreate(@Parameter(description = "file detail") @Valid StreamingFileUpload domains
+    public Single<HttpResponse<DomainBlock>> domainBlockCreate(@Parameter(description = "file detail") @Valid StreamingFileUpload domains
 ,@Parameter(description = "") @QueryValue(value = "domain")  String domain
 ,@Parameter(description = "") @QueryValue(value = "obfuscate")  Boolean obfuscate
 ,@Parameter(description = "") @QueryValue(value = "public_comment")  String publicComment
@@ -454,7 +455,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Delete(value = "/api/v1/admin/domain_blocks/{id}", produces = { "application/json" })
-    default Single<HttpResponse<DomainBlock>> domainBlockDelete(@Parameter(description = "The id of the domain block.") @PathVariable("id") String id
+    public Single<HttpResponse<DomainBlock>> domainBlockDelete(@Parameter(description = "The id of the domain block.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -471,7 +472,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/admin/domain_blocks/{id}", produces = { "application/json" })
-    default Single<HttpResponse<DomainBlock>> domainBlockGet(@Parameter(description = "The id of the domain block.") @PathVariable("id") String id
+    public Single<HttpResponse<DomainBlock>> domainBlockGet(@Parameter(description = "The id of the domain block.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -488,7 +489,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/admin/domain_blocks", produces = { "application/json" })
-    default Single<HttpResponse<List<DomainBlock>>> domainBlocksGet(@Nullable @Parameter(description = "If set to `true`, then each entry in the returned list of domain blocks will only consist of the fields `domain` and `public_comment`. This is perfect for when you want to save and share a list of all the domains you have blocked on your instance, so that someone else can easily import them, but you don't want them to see the database IDs of your blocks, or private comments etc.") @Valid @QueryValue(value = "export") Boolean export
+    public Single<HttpResponse<List<DomainBlock>>> domainBlocksGet(@Nullable @Parameter(description = "If set to `true`, then each entry in the returned list of domain blocks will only consist of the fields `domain` and `public_comment`. This is perfect for when you want to save and share a list of all the domains you have blocked on your instance, so that someone else can easily import them, but you don't want them to see the database IDs of your blocks, or private comments etc.") @Valid @QueryValue(value = "export") Boolean export
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -506,7 +507,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "409", description = "conflict -- shortcode for this emoji is already in use")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/admin/custom_emojis", produces = { "application/json" }, consumes = {"multipart/form-data"})
-    default Single<HttpResponse<Emoji>> emojiCreate(@Parameter(description = "") @QueryValue(value = "shortcode")  String shortcode
+    public Single<HttpResponse<Emoji>> emojiCreate(@Parameter(description = "") @QueryValue(value = "shortcode")  String shortcode
 ,@Parameter(description = "file detail") @Valid StreamingFileUpload image
 ,@Parameter(description = "") @QueryValue(value = "category")  String category
 ) {
@@ -525,7 +526,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Delete(value = "/api/v1/admin/custom_emojis/{id}", produces = { "application/json" })
-    default Single<HttpResponse<AdminEmoji>> emojiDelete(@Parameter(description = "The id of the emoji.") @PathVariable("id") String id
+    public Single<HttpResponse<AdminEmoji>> emojiDelete(@Parameter(description = "The id of the emoji.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -542,7 +543,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/admin/custom_emojis/{id}", produces = { "application/json" })
-    default Single<HttpResponse<AdminEmoji>> emojiGet(@Parameter(description = "The id of the emoji.") @PathVariable("id") String id
+    public Single<HttpResponse<AdminEmoji>> emojiGet(@Parameter(description = "The id of the emoji.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -559,7 +560,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Patch(value = "/api/v1/admin/custom_emojis/{id}", produces = { "application/json" }, consumes = {"multipart/form-data"})
-    default Single<HttpResponse<AdminEmoji>> emojiUpdate(@Parameter(description = "") @QueryValue(value = "type")  String type
+    public Single<HttpResponse<AdminEmoji>> emojiUpdate(@Parameter(description = "") @QueryValue(value = "type")  String type
 ,@Parameter(description = "") @QueryValue(value = "shortcode")  String shortcode
 ,@Parameter(description = "file detail") @Valid StreamingFileUpload image
 ,@Parameter(description = "") @QueryValue(value = "category")  String category
@@ -580,7 +581,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/admin/custom_emojis", produces = { "application/json" })
-    default Single<HttpResponse<List<AdminEmoji>>> emojisGet(@Nullable @Parameter(description = "Comma-separated list of filters to apply to results. Recognized filters are:  `domain:[domain]` -- show emojis from the given domain, eg `?filter=domain:example.org` will show emojis from `example.org` only. Instead of giving a specific domain, you can also give either one of the key words `local` or `all` to show either local emojis only (`domain:local`) or show all emojis from all domains (`domain:all`). Note: `domain:*` is equivalent to `domain:all` (including local). If no domain filter is provided, `domain:all` will be assumed.  `disabled` -- include emojis that have been disabled.  `enabled` -- include emojis that are enabled.  `shortcode:[shortcode]` -- show only emojis with the given shortcode, eg `?filter=shortcode:blob_cat_uwu` will show only emojis with the shortcode `blob_cat_uwu` (case sensitive).  If neither `disabled` or `enabled` are provided, both disabled and enabled emojis will be shown.  If no filter query string is provided, the default `domain:all` will be used, which will show all emojis from all domains.") @Valid @QueryValue(value = "filter", defaultValue = "domain:all") String filter
+    public Single<HttpResponse<List<AdminEmoji>>> emojisGet(@Nullable @Parameter(description = "Comma-separated list of filters to apply to results. Recognized filters are:  `domain:[domain]` -- show emojis from the given domain, eg `?filter=domain:example.org` will show emojis from `example.org` only. Instead of giving a specific domain, you can also give either one of the key words `local` or `all` to show either local emojis only (`domain:local`) or show all emojis from all domains (`domain:all`). Note: `domain:*` is equivalent to `domain:all` (including local). If no domain filter is provided, `domain:all` will be assumed.  `disabled` -- include emojis that have been disabled.  `enabled` -- include emojis that are enabled.  `shortcode:[shortcode]` -- show only emojis with the given shortcode, eg `?filter=shortcode:blob_cat_uwu` will show only emojis with the shortcode `blob_cat_uwu` (case sensitive).  If neither `disabled` or `enabled` are provided, both disabled and enabled emojis will be shown.  If no filter query string is provided, the public `domain:all` will be used, which will show all emojis from all domains.") @Valid @QueryValue(value = "filter", defaultValue = "domain:all") String filter
 ,@Nullable @Parameter(description = "Number of emojis to return. Less than 1, or not set, means unlimited (all emojis).") @Valid @QueryValue(value = "limit", defaultValue = "50") Integer limit
 ,@Nullable @Parameter(description = "Return only emojis with `[shortcode]@[domain]` *LOWER* (alphabetically) than given `[shortcode]@[domain]`. For example, if `max_shortcode_domain=beep@example.org`, then returned values might include emojis with `[shortcode]@[domain]`s like `car@example.org`, `debian@aaa.com`, `test@` (local emoji), etc. Emoji with the given `[shortcode]@[domain]` will not be included in the result set.") @Valid @QueryValue(value = "max_shortcode_domain") String maxShortcodeDomain
 ,@Nullable @Parameter(description = "Return only emojis with `[shortcode]@[domain]` *HIGHER* (alphabetically) than given `[shortcode]@[domain]`. For example, if `max_shortcode_domain=beep@example.org`, then returned values might include emojis with `[shortcode]@[domain]`s like `arse@test.com`, `0101_binary@hackers.net`, `bee@` (local emoji), etc. Emoji with the given `[shortcode]@[domain]` will not be included in the result set.") @Valid @QueryValue(value = "min_shortcode_domain") String minShortcodeDomain
@@ -599,7 +600,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/favourites", produces = { "application/json" })
-    default Single<HttpResponse<List<io.jediverse.coruscant.model.Status>>> favouritesGet(@Nullable @Parameter(description = "Number of statuses to return.") @Valid @QueryValue(value = "limit", defaultValue = "20") Integer limit
+    public Single<HttpResponse<List<io.jediverse.coruscant.model.Status>>> favouritesGet(@Nullable @Parameter(description = "Number of statuses to return.") @Valid @QueryValue(value = "limit", defaultValue = "20") Integer limit
 , @Nullable @Parameter(description = "Return only favourited statuses *OLDER* than the given favourite ID. The status with the corresponding fave ID will not be included in the response.") @Valid @QueryValue(value = "max_id") String maxId
 , @Nullable @Parameter(description = "Return only favourited statuses *NEWER* than the given favourite ID. The status with the corresponding fave ID will not be included in the response.") @Valid @QueryValue(value = "min_id") String minId
 ) {
@@ -617,7 +618,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/follow_requests", produces = { "application/json" })
-    default Single<HttpResponse<List<Account>>> getFollowRequests(@Nullable @Parameter(description = "Number of accounts to return.") @Valid @QueryValue(value = "limit", defaultValue = "40") Integer limit
+    public Single<HttpResponse<List<Account>>> getFollowRequests(@Nullable @Parameter(description = "Number of accounts to return.") @Valid @QueryValue(value = "limit", defaultValue = "40") Integer limit
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -630,7 +631,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "400", description = "bad request")
     @ApiResponse(responseCode = "401", description = "unauthorized")
     @Get(value = "/api/v1/timelines/home", produces = { "application/json" })
-    default Single<HttpResponse<List<io.jediverse.coruscant.model.Status>>> homeTimeline(@Nullable @Parameter(description = "Return only statuses *OLDER* than the given max status ID. The status with the specified ID will not be included in the response.") @Valid @QueryValue(value = "max_id") String maxId
+    public Single<HttpResponse<List<io.jediverse.coruscant.model.Status>>> homeTimeline(@Nullable @Parameter(description = "Return only statuses *OLDER* than the given max status ID. The status with the specified ID will not be included in the response.") @Valid @QueryValue(value = "max_id") String maxId
 , @Nullable @Parameter(description = "Return only statuses *NEWER* than the given since status ID. The status with the specified ID will not be included in the response.") @Valid @QueryValue(value = "since_id") String sinceId
 , @Nullable @Parameter(description = "Return only statuses *NEWER* than the given since status ID. The status with the specified ID will not be included in the response.") @Valid @QueryValue(value = "min_id") String minId
 , @Nullable @Parameter(description = "Number of statuses to return.") @Valid @QueryValue(value = "limit", defaultValue = "20") Integer limit
@@ -647,7 +648,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal error")
     @Get(value = "/api/v1/instance", produces = { "application/json" })
-    default Single<HttpResponse<Instance>> instanceGet() {
+    public Single<HttpResponse<Instance>> instanceGet() {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
         });
@@ -663,7 +664,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/instance/peers", produces = { "application/json" })
-    default Single<HttpResponse<List<Domain>>> instancePeersGet(@Nullable @Parameter(description = "Comma-separated list of filters to apply to results. Recognized filters are:   - `open` -- include peers that are not suspended or silenced   - `suspended` -- include peers that have been suspended.  If filter is `open`, only instances that haven't been suspended or silenced will be returned.  If filter is `suspended`, only suspended instances will be shown.  If filter is `open,suspended`, then all known instances will be returned.  If filter is an empty string or not set, then `open` will be assumed as the default.") @Valid @QueryValue(value = "filter", defaultValue = "open") String filter
+    public Single<HttpResponse<List<Domain>>> instancePeersGet(@Nullable @Parameter(description = "Comma-separated list of filters to apply to results. Recognized filters are:   - `open` -- include peers that are not suspended or silenced   - `suspended` -- include peers that have been suspended.  If filter is `open`, only instances that haven't been suspended or silenced will be returned.  If filter is `suspended`, only suspended instances will be shown.  If filter is `open,suspended`, then all known instances will be returned.  If filter is an empty string or not set, then `open` will be assumed as the default.") @Valid @QueryValue(value = "filter", defaultValue = "open") String filter
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -680,7 +681,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Patch(value = "/api/v1/instance", produces = { "application/json" }, consumes = {"multipart/form-data"})
-    default Single<HttpResponse<Instance>> instanceUpdate(@Parameter(description = "") @QueryValue(value = "title")  String title
+    public Single<HttpResponse<Instance>> instanceUpdate(@Parameter(description = "") @QueryValue(value = "title")  String title
 ,@Parameter(description = "") @QueryValue(value = "contact_username")  String contactUsername
 ,@Parameter(description = "") @QueryValue(value = "contact_email")  String contactEmail
 ,@Parameter(description = "") @QueryValue(value = "short_description")  String shortDescription
@@ -705,7 +706,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/admin/media_cleanup")
-    default Single<HttpResponse<Void>> mediaCleanup(@Nullable @Parameter(description = "Number of days of remote media to keep. Native values will be treated as 0. If value is not specified, the value of media-remote-cache-days in the server config will be used.") @Valid @QueryValue(value = "remote_cache_days") Long remoteCacheDays
+    public Single<HttpResponse<Void>> mediaCleanup(@Nullable @Parameter(description = "Number of days of remote media to keep. Native values will be treated as 0. If value is not specified, the value of media-remote-cache-days in the server config will be used.") @Valid @QueryValue(value = "remote_cache_days") Long remoteCacheDays
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -720,7 +721,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "422", description = "unprocessable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/{api_version}/media", produces = { "application/json" }, consumes = {"multipart/form-data"})
-    default Single<HttpResponse<Attachment>> mediaCreate(@Parameter(description = "") @QueryValue(value = "description")  String description
+    public Single<HttpResponse<Attachment>> mediaCreate(@Parameter(description = "") @QueryValue(value = "description")  String description
 ,@Parameter(description = "") @QueryValue(value = "focus")  String focus
 ,@Parameter(description = "file detail") @Valid StreamingFileUpload file
 ,@Parameter(description = "Version of the API to use. Must be either `v1` or `v2`.") @PathVariable("api_version") String apiVersion
@@ -739,7 +740,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/media/{id}", produces = { "application/json" })
-    default Single<HttpResponse<Attachment>> mediaGet(@Parameter(description = "id of the attachment") @PathVariable("id") String id
+    public Single<HttpResponse<Attachment>> mediaGet(@Parameter(description = "id of the attachment") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -756,7 +757,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/admin/media_refetch")
-    default Single<HttpResponse<Void>> mediaRefetch(@Nullable @Parameter(description = "Domain to refetch media from. If empty, all domains will be refetched.") @Valid @QueryValue(value = "domain") String domain
+    public Single<HttpResponse<Void>> mediaRefetch(@Nullable @Parameter(description = "Domain to refetch media from. If empty, all domains will be refetched.") @Valid @QueryValue(value = "domain") String domain
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -772,7 +773,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Put(value = "/api/v1/media/{id}", produces = { "application/json" }, consumes = {"application/json", "application/xml", "application/x-www-form-urlencoded"})
-    default Single<HttpResponse<Attachment>> mediaUpdate(@Parameter(description = "id of the attachment to update") @PathVariable("id") String id
+    public Single<HttpResponse<Attachment>> mediaUpdate(@Parameter(description = "id of the attachment to update") @PathVariable("id") String id
 ,@Parameter(description = "") @Valid @Body MediaIdBody body
 ) {
         return Single.fromCallable(() -> {
@@ -789,7 +790,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Put(value = "/api/v1/media/{id}", produces = { "application/json" }, consumes = {"application/json", "application/xml", "application/x-www-form-urlencoded"})
-    default Single<HttpResponse<Attachment>> mediaUpdate(@Parameter(description = "id of the attachment to update") @PathVariable("id") String id
+    public Single<HttpResponse<Attachment>> mediaUpdate(@Parameter(description = "id of the attachment to update") @PathVariable("id") String id
 ,@Parameter(description = "") @QueryValue(value = "description")  String description
 ,@Parameter(description = "") @QueryValue(value = "focus")  String focus
 ) {
@@ -807,7 +808,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/notifications", produces = { "application/json" })
-    default Single<HttpResponse<List<Notification>>> notifications(@Nullable @Parameter(description = "Number of notifications to return.") @Valid @QueryValue(value = "limit", defaultValue = "20") Integer limit
+    public Single<HttpResponse<List<Notification>>> notifications(@Nullable @Parameter(description = "Number of notifications to return.") @Valid @QueryValue(value = "limit", defaultValue = "20") Integer limit
 , @Nullable @Parameter(description = "") @Valid @QueryValue(value = "exclude_types") List<String> excludeTypes
 , @Nullable @Parameter(description = "Return only notifications *OLDER* than the given max status ID. The status with the specified ID will not be included in the response.") @Valid @QueryValue(value = "max_id") String maxId
 , @Nullable @Parameter(description = "Return only notifications *NEWER* than the given since status ID. The status with the specified ID will not be included in the response.") @Valid @QueryValue(value = "since_id") String sinceId
@@ -823,7 +824,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "400", description = "bad request")
     @ApiResponse(responseCode = "401", description = "unauthorized")
     @Get(value = "/api/v1/timelines/public", produces = { "application/json" })
-    default Single<HttpResponse<List<io.jediverse.coruscant.model.Status>>> publicTimeline(@Nullable @Parameter(description = "Return only statuses *OLDER* than the given max status ID. The status with the specified ID will not be included in the response.") @Valid @QueryValue(value = "max_id") String maxId
+    public Single<HttpResponse<List<io.jediverse.coruscant.model.Status>>> publicTimeline(@Nullable @Parameter(description = "Return only statuses *OLDER* than the given max status ID. The status with the specified ID will not be included in the response.") @Valid @QueryValue(value = "max_id") String maxId
 , @Nullable @Parameter(description = "Return only statuses *NEWER* than the given since status ID. The status with the specified ID will not be included in the response.") @Valid @QueryValue(value = "since_id") String sinceId
 , @Nullable @Parameter(description = "Return only statuses *NEWER* than the given since status ID. The status with the specified ID will not be included in the response.") @Valid @QueryValue(value = "min_id") String minId
 , @Nullable @Parameter(description = "Number of statuses to return.") @Valid @QueryValue(value = "limit", defaultValue = "20") Integer limit
@@ -843,7 +844,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/follow_requests/{account_id}/reject", produces = { "application/json" })
-    default Single<HttpResponse<AccountRelationship>> rejectFollowRequest(@Parameter(description = "ID of the account requesting to follow you.") @PathVariable("account_id") String accountId
+    public Single<HttpResponse<AccountRelationship>> rejectFollowRequest(@Parameter(description = "ID of the account requesting to follow you.") @PathVariable("account_id") String accountId
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -859,7 +860,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/search", produces = { "*/*" })
-    default Single<HttpResponse<List<SearchResult>>> searchGet(@NotNull @Parameter(description = "Type of the search query to perform.  Must be one of: `accounts`, `hashtags`, `statuses`.") @Valid @QueryValue(value = "type") String type
+    public Single<HttpResponse<List<SearchResult>>> searchGet(@NotNull @Parameter(description = "Type of the search query to perform.  Must be one of: `accounts`, `hashtags`, `statuses`.") @Valid @QueryValue(value = "type") String type
 , @NotNull @Parameter(description = "String to use as a search query.  For accounts, this should be in the format `@someaccount@some.instance.com`, or the format `https://some.instance.com/@someaccount`  For a status, this can be in the format: `https://some.instance.com/@someaccount/SOME_ID_OF_A_STATUS`") @Valid @QueryValue(value = "q") String q
 , @Nullable @Parameter(description = "If type is `statuses`, then statuses returned will be authored only by this account.") @Valid @QueryValue(value = "account_id") String accountId
 , @Nullable @Parameter(description = "Return results *older* than this id.  The entry with this ID will not be included in the search results.") @Valid @QueryValue(value = "max_id") String maxId
@@ -885,7 +886,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/statuses/{id}/bookmark", produces = { "application/json" })
-    default Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusBookmark(@Parameter(description = "Target status ID.") @PathVariable("id") String id
+    public Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusBookmark(@Parameter(description = "Target status ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -900,7 +901,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "403", description = "forbidden")
     @ApiResponse(responseCode = "404", description = "not found")
     @Get(value = "/api/v1/statuses/{id}/reblogged_by", produces = { "application/json" })
-    default Single<HttpResponse<List<Account>>> statusBoostedBy(@Parameter(description = "Target status ID.") @PathVariable("id") String id
+    public Single<HttpResponse<List<Account>>> statusBoostedBy(@Parameter(description = "Target status ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -917,7 +918,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/statuses/{id}/context", produces = { "application/json" })
-    default Single<HttpResponse<StatusContext>> statusContext(@Parameter(description = "Target status ID.") @PathVariable("id") String id
+    public Single<HttpResponse<StatusContext>> statusContext(@Parameter(description = "Target status ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -934,7 +935,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/statuses", produces = { "application/json" }, consumes = {"application/json", "application/xml", "application/x-www-form-urlencoded"})
-    default Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusCreate(@Parameter(description = "") @Valid @Body V1StatusesBody body
+    public Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusCreate(@Parameter(description = "") @Valid @Body V1StatusesBody body
 , @Nullable @Parameter(description = "This status will be federated beyond the local timeline(s).") @Valid @QueryValue(value = "federated") Boolean federated
 , @Nullable @Parameter(description = "This status can be boosted/reblogged.") @Valid @QueryValue(value = "boostable") Boolean boostable
 , @Nullable @Parameter(description = "This status can be replied to.") @Valid @QueryValue(value = "replyable") Boolean replyable
@@ -955,7 +956,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/statuses", produces = { "application/json" }, consumes = {"application/json", "application/xml", "application/x-www-form-urlencoded"})
-    default Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusCreate(@Parameter(description = "") @QueryValue(value = "status")  String status
+    public Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusCreate(@Parameter(description = "") @QueryValue(value = "status")  String status
 , @Parameter(description = "") @QueryValue(value = "media_ids")  List<String> mediaIds
 , @Parameter(description = "") @QueryValue(value = "in_reply_to_id")  String inReplyToId
 , @Parameter(description = "") @QueryValue(value = "sensitive")  Boolean sensitive
@@ -984,7 +985,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Delete(value = "/api/v1/statuses/{id}", produces = { "application/json" })
-    default Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusDelete(@Parameter(description = "Target status ID.") @PathVariable("id") String id
+    public Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusDelete(@Parameter(description = "Target status ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -1001,7 +1002,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/statuses/{id}/favourite", produces = { "application/json" })
-    default Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusFave(@Parameter(description = "Target status ID.") @PathVariable("id") String id
+    public Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusFave(@Parameter(description = "Target status ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -1018,7 +1019,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/statuses/{id}/favourited_by", produces = { "application/json" })
-    default Single<HttpResponse<List<Account>>> statusFavedBy(@Parameter(description = "Target status ID.") @PathVariable("id") String id
+    public Single<HttpResponse<List<Account>>> statusFavedBy(@Parameter(description = "Target status ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -1035,7 +1036,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Get(value = "/api/v1/statuses/{id}", produces = { "application/json" })
-    default Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusGet(@Parameter(description = "Target status ID.") @PathVariable("id") String id
+    public Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusGet(@Parameter(description = "Target status ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -1052,7 +1053,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/statuses/{id}/reblog", produces = { "application/json" })
-    default Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusReblog(@Parameter(description = "Target status ID.") @PathVariable("id") String id
+    public Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusReblog(@Parameter(description = "Target status ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -1069,7 +1070,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/statuses/{id}/unbookmark", produces = { "application/json" })
-    default Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusUnbookmark(@Parameter(description = "Target status ID.") @PathVariable("id") String id
+    public Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusUnbookmark(@Parameter(description = "Target status ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -1086,7 +1087,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/statuses/{id}/unfavourite", produces = { "application/json" })
-    default Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusUnfave(@Parameter(description = "Target status ID.") @PathVariable("id") String id
+    public Single<HttpResponse<io.jediverse.coruscant.model.Status>> statusUnfave(@Parameter(description = "Target status ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -1103,7 +1104,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal server error")
     @Post(value = "/api/v1/statuses/{id}/unreblog", produces = { "application/json" })
-    default Single<HttpResponse<Status>> statusUnreblog(@Parameter(description = "Target status ID.") @PathVariable("id") String id
+    public Single<HttpResponse<Status>> statusUnreblog(@Parameter(description = "Target status ID.") @PathVariable("id") String id
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -1116,7 +1117,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "400", description = "bad request")
     @ApiResponse(responseCode = "401", description = "unauthorized")
     @Get(value = "/api/v1/streaming", produces = { "application/json" })
-    default Single<HttpResponse<Void>> streamGet(@NotNull @Parameter(description = "Access token for the requesting account.") @Valid @QueryValue(value = "access_token") String accessToken
+    public Single<HttpResponse<Void>> streamGet(@NotNull @Parameter(description = "Access token for the requesting account.") @Valid @QueryValue(value = "access_token") String accessToken
 ,@NotNull @Parameter(description = "Type of stream to request.  Options are:  `user`: receive updates for the account's home timeline. `public`: receive updates for the public timeline. `public:local`: receive updates for the local timeline. `hashtag`: receive updates for a given hashtag. `hashtag:local`: receive local updates for a given hashtag. `list`: receive updates for a certain list of accounts. `direct`: receive updates for direct messages.") @Valid @QueryValue(value = "stream") String stream
 ) {
         return Single.fromCallable(() -> {
@@ -1133,7 +1134,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal error")
     @Post(value = "/api/v1/user/password_change", consumes = {"application/json", "application/xml", "application/x-www-form-urlencoded"})
-    default Single<HttpResponse<Void>> userPasswordChange(@Parameter(description = "") @Valid @Body UserPasswordChangeBody body
+    public Single<HttpResponse<Void>> userPasswordChange(@Parameter(description = "") @Valid @Body UserPasswordChangeBody body
 ) {
         return Single.fromCallable(() -> {
             throw new UnsupportedOperationException();
@@ -1149,7 +1150,7 @@ public interface PublicApi {
     @ApiResponse(responseCode = "406", description = "not acceptable")
     @ApiResponse(responseCode = "500", description = "internal error")
     @Post(value = "/api/v1/user/password_change", consumes = {"application/json", "application/xml", "application/x-www-form-urlencoded"})
-    default Single<HttpResponse<Void>> userPasswordChange(@Parameter(description = "") @QueryValue(value = "old_password")  String oldPassword
+    public Single<HttpResponse<Void>> userPasswordChange(@Parameter(description = "") @QueryValue(value = "old_password")  String oldPassword
 ,@Parameter(description = "") @QueryValue(value = "new_password")  String newPassword
 ) {
         return Single.fromCallable(() -> {

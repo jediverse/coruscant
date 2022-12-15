@@ -17,13 +17,12 @@ import java.util.Optional;
 
 
 @Controller
-public interface NodeinfoApi {
-
+public class NodeinfoApi {
 
     @Operation(summary = "Returns a compliant nodeinfo response to node info queries.", operationId = "nodeInfoGet", description = "See: https://nodeinfo.diaspora.software/schema.html" , tags = {"nodeinfo"})
     @ApiResponse(responseCode = "200", description = "")
     @Get(value = "/nodeinfo/2.0", produces = { "application/json; profile=http://nodeinfo.diaspora.software/ns/schema/2.0#" })
-    default Single<HttpResponse<Nodeinfo>> nodeInfoGet() {
+    public Single<HttpResponse<Nodeinfo>> nodeInfoGet() {
         return Single.fromCallable(() -> new HttpResponse<Nodeinfo>() {
             @Override
             public HttpStatus getStatus() {

@@ -14,15 +14,15 @@ repositories {
 dependencies {
     annotationProcessor("io.micronaut:micronaut-http-validation")
     annotationProcessor("io.micronaut.openapi:micronaut-openapi")
-    annotationProcessor("io.micronaut.security:micronaut-security-annotations")
+   // annotationProcessor("io.micronaut.security:micronaut-security-annotations")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-jackson-databind")
     implementation("io.micronaut:micronaut-session")
-    implementation("io.micronaut.acme:micronaut-acme")
-    implementation("io.micronaut.cache:micronaut-cache-infinispan")
-    implementation("io.micronaut.elasticsearch:micronaut-elasticsearch")
-    implementation("io.micronaut.rss:micronaut-rss")
-    implementation("io.micronaut.security:micronaut-security-oauth2")
+   // implementation("io.micronaut.acme:micronaut-acme")
+   // implementation("io.micronaut.cache:micronaut-cache-infinispan")
+   // implementation("io.micronaut.elasticsearch:micronaut-elasticsearch")
+   // implementation("io.micronaut.rss:micronaut-rss")
+   // implementation("io.micronaut.security:micronaut-security-oauth2")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("io.swagger.core.v3:swagger-annotations")
     implementation("jakarta.annotation:jakarta.annotation-api")
@@ -38,8 +38,8 @@ application {
     mainClass.set("io.jediverse.Application")
 }
 java {
-    sourceCompatibility = JavaVersion.toVersion("17")
-    targetCompatibility = JavaVersion.toVersion("17")
+    sourceCompatibility = JavaVersion.toVersion("14")
+    targetCompatibility = JavaVersion.toVersion("14")
 }
 
 graalvmNative.toolchainDetection = false
@@ -48,7 +48,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("io.jediverse.*")
+        annotations("io.jediverse.coruscant.api.*")
     }
     testResources {
         additionalModules.add("jdbc-postgresql")

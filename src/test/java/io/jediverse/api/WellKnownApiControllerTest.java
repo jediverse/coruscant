@@ -13,14 +13,6 @@ class WellKnownApiControllerTest {
     @Inject
     private WellKnownApi api;
 
-    @Test
-    void nodeInfoWellKnownGetTest() {
-        try {
-            api.nodeInfoWellKnownGet().blockingGet();
-        } catch (UnsupportedOperationException e) {
-            assumeTrue(false, "API is not yet implemented");
-        }
-    }
 
     @Test
     void webfingerGetTest() {
