@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: io.jediverse
+testFramework: junit
+sourceLanguage: java
+buildTool: gradle
+features: [acme, annotation-api, app-name, cache-infinispan, elasticsearch, gradle, http-client, http-session, jackson-databind, java, java-application, jdbc-hikari, junit, logback, micronaut-build, netty-server, openapi, postgres, properties, readme, rss, security-annotations, security-oauth2, shade, swagger-ui, test-resources]

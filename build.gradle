@@ -1,0 +1,59 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.micronaut.application") version "3.6.3"
+    id("io.micronaut.test-resources") version "3.6.3"
+}
+
+version = "0.1"
+group = "io.jediverse"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
+    annotationProcessor("io.micronaut.security:micronaut-security-annotations")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("io.micronaut:micronaut-session")
+    implementation("io.micronaut.acme:micronaut-acme")
+    implementation("io.micronaut.cache:micronaut-cache-infinispan")
+    implementation("io.micronaut.elasticsearch:micronaut-elasticsearch")
+    implementation("io.micronaut.rss:micronaut-rss")
+    implementation("io.micronaut.security:micronaut-security-oauth2")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("io.swagger.core.v3:swagger-annotations")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("org.postgresql:postgresql")
+    implementation("io.micronaut:micronaut-validation")
+    implementation group: 'io.reactivex.rxjava2', name: 'rxjava'
+    implementation("io.micronaut.flyway:micronaut-flyway")
+}
+
+
+application {
+    mainClass.set("io.jediverse.Application")
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
+}
+
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("io.jediverse.*")
+    }
+    testResources {
+        additionalModules.add("jdbc-postgresql")
+    }
+}
+
+
+

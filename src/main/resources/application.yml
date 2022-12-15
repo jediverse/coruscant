@@ -1,0 +1,47 @@
+micronaut:
+  session:
+    http:
+      header: 'true'
+      cookie: 'true'
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      swagger-ui:
+        mapping: /swagger-ui/**
+        paths: classpath:META-INF/swagger/views/swagger-ui
+  application:
+    name: coruscant
+  server:
+    ssl:
+      enabled: false
+  security:
+    authentication: cookie
+datasources:
+  default:
+    db-type: postgres
+    driverClassName: org.postgresql.Driver
+    url: 'jdbc:postgresql://localhost/test'
+    username: postgres
+    password: postgres
+acme:
+  enabled: false
+elasticsearch:
+  enabled: false
+  httpHosts: http://localhost:9200,http://127.0.0.2:9200
+infinispan:
+  enabled: false
+  client:
+    hotrod:
+      server:
+        port: '10222'
+        host: infinispan.example.com
+netty:
+  default:
+    allocator:
+      max-order: '3'
+flyway:
+  datasources:
+    default:
+      enabled: true
