@@ -17,6 +17,7 @@ micronaut:
     ssl:
       enabled: false
   security:
+    enabled: false
     authentication: cookie
 datasources:
   default:

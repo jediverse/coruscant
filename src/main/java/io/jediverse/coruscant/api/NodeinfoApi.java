@@ -6,11 +6,14 @@
 package io.jediverse.coruscant.api;
 
 import io.jediverse.coruscant.model.Nodeinfo;
+import io.micronaut.core.convert.value.MutableConvertibleValues;
 import io.micronaut.http.*;
 import io.micronaut.http.annotation.*;
 import io.reactivex.Single;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.responses.*;
+
+import java.util.Optional;
 
 
 @Controller
@@ -21,8 +24,26 @@ public interface NodeinfoApi {
     @ApiResponse(responseCode = "200", description = "")
     @Get(value = "/nodeinfo/2.0", produces = { "application/json; profile=http://nodeinfo.diaspora.software/ns/schema/2.0#" })
     default Single<HttpResponse<Nodeinfo>> nodeInfoGet() {
-        return Single.fromCallable(() -> {
-            throw new UnsupportedOperationException();
+        return Single.fromCallable(() -> new HttpResponse<Nodeinfo>() {
+            @Override
+            public HttpStatus getStatus() {
+                return HttpStatus.OK;
+            }
+
+            @Override
+            public HttpHeaders getHeaders() {
+                return null;
+            }
+
+            @Override
+            public MutableConvertibleValues<Object> getAttributes() {
+                return null;
+            }
+
+            @Override
+            public Optional<Nodeinfo> getBody() {
+                return Optional.of(new Nodeinfo());
+            }
         });
     }
 
